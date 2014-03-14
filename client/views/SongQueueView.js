@@ -4,8 +4,7 @@ define(["backbone", "jquery", "songQueueEntryView"], function(Backbone, $, SongQ
     initialize: function() {
       this.render();
     },
-    render: function(){
-      console.log(this.collection.length);
+   render: function(){
       this.$el.html('<h3>Song Queue</h3>').append(
         this.collection.map(function(song){
           return new SongQueueEntryView({model: song}).render();

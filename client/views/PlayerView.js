@@ -4,19 +4,26 @@ define(["backbone", "jquery"], function(Backbone, $){
 
     // HTML5 (native) audio tag is being used
     // see: https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Using_HTML5_audio_and_video
-    el: '<audio controls autoplay />',
+    el: '<div class="audioBox"><audio controls autoplay /></div>',
 
     initialize: function() {
     },
     events: {
       'ended': function() {
-        console.log("song over !!");
+        console.log("song over!!");
+        this.model.set('playing', false);
         this.trigger("songFinished", this);
       }
     },
     setSong: function(song){
       this.model = song;
+      this.model.set('playing', true);
       this.render();
+    },
+    endSong: function(song){
+      console.log("endSong");
+      $("audio")[0].currentTime = 999999;
+      //magic happens here
     },
 
     render: function(){

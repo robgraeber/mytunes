@@ -4,6 +4,7 @@ define(["jquery", "backbone", "playerView", "libraryView", "songQueueView"],
     var AppView = Backbone.View.extend({
 
       initialize: function(params){
+        this.el.id = "main";
         this.playerView = new PlayerView({model: this.model.get('currentSong')});
         this.libraryView = new LibraryView({collection: this.model.get('library')});
         this.songQueueView = new SongQueueView({collection: this.model.get('songQueue')});
@@ -12,15 +13,22 @@ define(["jquery", "backbone", "playerView", "libraryView", "songQueueView"],
           this.playerView.setSong(model.get('currentSong'));
         }, this);
 
+        this.model.on('songExpired', function(song){
+          this.playerView.endSong();
+        }, this);
+
 
         this.model.get('songQueue').on('add', function(queue){
           this.songQueueView.render();
-          if(!this.model.get('currentSong').get("url")){
+          if(!this.model.get('currentSong').get("playing")){
             this.playNextSongQueue();
           }
         }, this);
         this.model.get('songQueue').on('remove', function(queue){
           this.songQueueView.render();
+          if(!this.model.get('currentSong').get("url")){
+            this.playNextSongQueue();
+          }
         }, this);
 
         this.playerView.on('songFinished', function(view){
@@ -44,7 +52,7 @@ define(["jquery", "backbone", "playerView", "libraryView", "songQueueView"],
         console.log("Playing new queued song");
         this.model.set('currentSong', this.model.get("songQueue").models[0]);
       }else{
-        this.model.set('currentSong', new SongModel());
+        // this.model.set('currentSong', new SongModel());
       }
     }
     });

@@ -7,6 +7,10 @@ define(["backbone"], function(Backbone){
     },
     enqueue: function(){
       this.trigger('enqueue', this);
+    },
+    dequeue: function(){
+      console.log("model:dequeue")
+      this.trigger('dequeue', this);
     }
   });
   SongModel.prototype.enqueue.restore = function(){

@@ -1,0 +1,28 @@
+body{
+  background-color: #eee;
+}
+.audioBox{
+  margin: 0px auto;
+  width: 300px;
+}
+#main{
+  border: solid #ddd 1px;
+  margin: 0px auto;
+  padding: 10px;
+  width:600px;
+  background-color: white;
+}
+#main::before{
+  content: " ";
+  display: table;
+  width: 100%;
+}
+#main::after{
+  content: " ";
+  display: table;
+  width: 100%;
+  clear: both;
+}
+#rightSideBar{
+  float:right;
+}
