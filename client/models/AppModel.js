@@ -4,7 +4,6 @@ define(["backbone", "songModel", "songQueue"], function(Backbone, SongModel, Son
     initialize: function(params){
       this.set('currentSong', new SongModel());
       this.set('songQueue', new SongQueue());
-      console.dir(this);
 
       /* Note that 'this' is passed as the third argument. That third argument is
       the context. The 'play' handler will always be bound to that context we pass in.
@@ -23,8 +22,7 @@ define(["backbone", "songModel", "songQueue"], function(Backbone, SongModel, Son
         if(song === this.get('currentSong')){
           this.trigger("songExpired", song);
         }
-        //looking for a bug when the currently playing song is dequed
-        // this.get('songQueue').remove(song);
+        this.get('songQueue').remove(song);
       }, this);
     }
 
